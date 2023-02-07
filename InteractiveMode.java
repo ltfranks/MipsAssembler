@@ -46,7 +46,57 @@ public class InteractiveMode extends lab3 {
     public void emulator(String[] userArray) {
         if (userArray.length > 1) {
             int num1 = Integer.parseInt(userArray[1]);
-            if (userArray[0].equals("s")) {
+            if (userArray[0].equals("s")) {  // s with number
+                int instructionsExecuted = Integer.parseInt(userArray[1]);
+                for (int i = 0; i < instructionsExecuted; i++){
+
+                    if (cleanedFile.get(LineCount).get(0).equals("add")){ // add
+                        Registers.replace(cleanedFile.get(LineCount).get(1),  // rd = r1 + r2;
+                                Registers.get(cleanedFile.get(LineCount).get(2))
+                                        + Registers.get(cleanedFile.get(LineCount).get(3)));
+                    } else if (cleanedFile.get(LineCount).get(0).equals("addi")){
+                        Registers.replace(cleanedFile.get(LineCount).get(1),  // rd = r1 + #;
+                                Registers.get(cleanedFile.get(LineCount).get(2))
+                                        + Integer.parseInt(cleanedFile.get(LineCount).get(3)));
+                    } else if (cleanedFile.get(LineCount).get(0).equals("sub")){ // sub
+                        Registers.replace(cleanedFile.get(LineCount).get(1),  // rd = r1 - r2;
+                                Registers.get(cleanedFile.get(LineCount).get(2))
+                                        - Registers.get(cleanedFile.get(LineCount).get(3)));
+                    } else if (cleanedFile.get(LineCount).get(0).equals("and")){ // and
+                        Registers.replace(cleanedFile.get(LineCount).get(1),  // rd = r1 & r2;
+                                Registers.get(cleanedFile.get(LineCount).get(2))
+                                        & Registers.get(cleanedFile.get(LineCount).get(3)));
+                    } else if (cleanedFile.get(LineCount).get(0).equals("or")){ // or
+                        Registers.replace(cleanedFile.get(LineCount).get(1),  // rd = r1 | r2;
+                                Registers.get(cleanedFile.get(LineCount).get(2))
+                                        | Registers.get(cleanedFile.get(LineCount).get(3)));
+                    } else if (cleanedFile.get(LineCount).get(0).equals("sll")){ // sll
+                        Registers.replace(cleanedFile.get(LineCount).get(1),  // rd = r1 << r2;
+                                Registers.get(cleanedFile.get(LineCount).get(2))
+                                        << Registers.get(cleanedFile.get(LineCount).get(3)));
+                    } else if (cleanedFile.get(LineCount).get(0).equals("slt")){ // set less than
+                        if (Registers.get(cleanedFile.get(LineCount).get(2)) < Registers.get(cleanedFile.get(LineCount).get(3))){
+                            Registers.replace(cleanedFile.get(LineCount).get(1), 1);    // if rs < rt then rd = 1. else, rd = 0
+                        } else {
+                            Registers.replace(cleanedFile.get(LineCount).get(1), 0);
+                        }
+                    } else if (cleanedFile.get(LineCount).get(0).equals("jr")){ // jr
+                        Registers.replace("pc", Registers.get(cleanedFile.get(LineCount).get(1)));
+                    } else if (cleanedFile.get(LineCount).get(0).equals("beq")){ // if rs = rt then, j -> label
+                        if (Registers.get(cleanedFile.get(LineCount).get(1)) <= Registers.get(cleanedFile.get(LineCount).get(2))){
+                            LineCount = LineCount - LabelLocation.get(cleanedFile.get(LineCount).get(3));  // lineCount = lineCount - LabelLocation
+                        }
+                    }
+
+                    // still need bne, lw, sw, j, jal
+
+                    LineCount++;
+                }
+
+                if (userArray.equals("add")){
+
+                }
+
                 // replace
                 System.out.println(userArray[0] + num1);
             } else if (userArray[0].equals("m") && userArray.length == 3) {
@@ -54,7 +104,8 @@ public class InteractiveMode extends lab3 {
                 // replace
                 System.out.println(userArray[0] + num1 + num2);
             }
-        } else {
+        } // single letter instructions ^^^
+        else {
             if (userArray[0].equals("h")) {
                 System.out.println();
                 System.out.print("""
@@ -90,7 +141,8 @@ public class InteractiveMode extends lab3 {
 
                 // replace
                 System.out.println();
-            } else if (userArray[0].equals("s")) {
+            } else if (userArray[0].equals("s")) { // s
+
 
                 // replace
                 System.out.println();

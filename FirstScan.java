@@ -19,9 +19,9 @@ public class FirstScan extends lab3 {
 //                System.out.println(line);
                 if (line.contains(":")) {
                     String[] parts = line.split(":");
-                    LabelLocation.put(parts[0], super.LineCount);
+                    LabelLocation.put(parts[0], LineCount);
                 }
-                ++super.LineCount;
+                ++LineCount;
             }
         } catch (FileNotFoundException e) {
             System.out.println("File not found");

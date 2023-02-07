@@ -54,7 +54,11 @@ public class InteractiveMode extends lab3 {
                 System.out.println(cleanedFile);
                 registers.replace("$a1",  // rd = r1 + #;
                         3);
-                System.out.println("yoyoyo: " + registers.get("$a1"));
+//                System.out.println("yoyoyo: " + registers.get("$a1"));
+                System.out.println("BRO HERE " +cleanedFile.get(LineCount).get(1));
+//                registers.replace(cleanedFile.get(LineCount).get(1),  // rd = r1 + #;
+//                        (registers.get(cleanedFile.get(LineCount).get(2)) + Integer.parseInt(cleanedFile.get(LineCount).get(3))));
+
 
                 for (int i = 0; i <= num1; i++){
 

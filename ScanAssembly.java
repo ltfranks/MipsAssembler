@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -44,6 +45,8 @@ public class ScanAssembly extends lab3 {
 //                }
 
             }
+            List<String> eof = Collections.singletonList("eof");
+            cleanedFile.add(eof);
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
         }

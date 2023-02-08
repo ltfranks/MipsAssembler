@@ -50,87 +50,14 @@ public class InteractiveMode extends lab3 {
             int num1 = Integer.parseInt(userArray[1]);
             int spCounter = 0;
             if (userArray[0].equals("s")) {  // s with number
-
                 System.out.println(cleanedFile);
-                registers.replace("$a1",  // rd = r1 + #;
-                        3);
-//                System.out.println("yoyoyo: " + registers.get("$a1"));
-                System.out.println("BRO HERE " +cleanedFile.get(LineCount).get(1));
-//                registers.replace(cleanedFile.get(LineCount).get(1),  // rd = r1 + #;
-//                        (registers.get(cleanedFile.get(LineCount).get(2)) + Integer.parseInt(cleanedFile.get(LineCount).get(3))));
-
-
-                for (int i = 0; i <= num1; i++){
-
-
-                    if (cleanedFile.get(LineCount).get(0).equals("add")){ // add
-                        registers.replace(cleanedFile.get(LineCount).get(1),  // rd = r1 + r2;
-                                registers.get(cleanedFile.get(LineCount).get(2))
-                                        + registers.get(cleanedFile.get(LineCount).get(3)));
-                    } else if (cleanedFile.get(LineCount).get(0).equals("addi")){
-                        registers.replace(cleanedFile.get(LineCount).get(1),  // rd = r1 + #;
-                                registers.get(cleanedFile.get(LineCount).get(2))
-                                        + Integer.parseInt(cleanedFile.get(LineCount).get(3)));
-                    } else if (cleanedFile.get(LineCount).get(0).equals("sub")){ // sub
-                        registers.replace(cleanedFile.get(LineCount).get(1),  // rd = r1 - r2;
-                                registers.get(cleanedFile.get(LineCount).get(2))
-                                        - registers.get(cleanedFile.get(LineCount).get(3)));
-                    } else if (cleanedFile.get(LineCount).get(0).equals("and")){ // and
-                        registers.replace(cleanedFile.get(LineCount).get(1),  // rd = r1 & r2;
-                                registers.get(cleanedFile.get(LineCount).get(2))
-                                        & registers.get(cleanedFile.get(LineCount).get(3)));
-                    } else if (cleanedFile.get(LineCount).get(0).equals("or")){ // or
-                        registers.replace(cleanedFile.get(LineCount).get(1),  // rd = r1 | r2;
-                                registers.get(cleanedFile.get(LineCount).get(2))
-                                        | registers.get(cleanedFile.get(LineCount).get(3)));
-                    } else if (cleanedFile.get(LineCount).get(0).equals("sll")){ // sll
-                        registers.replace(cleanedFile.get(LineCount).get(1),  // rd = r1 << r2;
-                                registers.get(cleanedFile.get(LineCount).get(2))
-                                        << registers.get(cleanedFile.get(LineCount).get(3)));
-                    } else if (cleanedFile.get(LineCount).get(0).equals("slt")){ // set less than
-                        if (registers.get(cleanedFile.get(LineCount).get(2)) < registers.get(cleanedFile.get(LineCount).get(3))){
-                            registers.replace(cleanedFile.get(LineCount).get(1), 1);    // if rs < rt then rd = 1. else, rd = 0
-                        } else {
-                            registers.replace(cleanedFile.get(LineCount).get(1), 0);
-                        }
-                    } else if (cleanedFile.get(LineCount).get(0).equals("jr")){ // jr
-                        registers.replace("pc", registers.get(cleanedFile.get(LineCount).get(1)));
-                    } else if (cleanedFile.get(LineCount).get(0).equals("beq")){ // if rs = rt then, j -> label
-                        if (registers.get(cleanedFile.get(LineCount).get(1)).equals(registers.get(cleanedFile.get(LineCount).get(2)))){
-                            LineCount = LineCount - LabelLocation.get(cleanedFile.get(LineCount).get(3));  // lineCount = lineCount - LabelLocation
-                        }
-                    } else if (cleanedFile.get(LineCount).get(0).equals("bne")){ // rs != rt then, j -> label
-                        if (!registers.get(cleanedFile.get(LineCount).get(1)).equals(registers.get(cleanedFile.get(LineCount).get(2)))){
-                            LineCount = LineCount - LabelLocation.get(cleanedFile.get(LineCount).get(3));  // lineCount = lineCount - LabelLocation
-                        }
-                    } else if (cleanedFile.get(LineCount).get(0).equals("sw")){
-                        if (!("$"+cleanedFile.get(LineCount).get(2).charAt(3)+cleanedFile.get(LineCount).get(2).charAt(4)).equals("$sp")){
-                            registers.replace(cleanedFile.get(LineCount).get(1),  // rd = #($register)
-                                    registers.get("$"+cleanedFile.get(LineCount).get(2).charAt(3)
-                                            +cleanedFile.get(LineCount).get(2).charAt(4)));
-                        } else {  // sp case
-                            // sw $a0 4($sp)
-                            // memory[4] = $a0
-                            data[cleanedFile.get(LineCount).get(2).charAt(0)] =
-                                    registers.get(cleanedFile.get(LineCount).get(1));
-                        }
-                    } else if (cleanedFile.get(LineCount).get(0).equals("lw")){
-                        
-                    }
-
-
-                    // still need lw, j, jal
-                    System.out.println("Instructions Executed: "+(LineCount+1));
-                    LineCount++;
-                }
-
+                new Instructions(num1);
 //                System.out.println(userArray[0] + num1);
             } else if (userArray[0].equals("m") && userArray.length == 3) {
-                System.out.println(userArray[0]);
-
                 int num2 = Integer.parseInt(userArray[2]);
-                // replace
-                System.out.println(userArray[0] + num1 + num2);
+                for (int i = num1; i < num2; i++) {
+                    System.out.println("[" + i + "] = " + data[num1] + " " + data[num2]);
+                }
             }
         } // single letter instructions ^^^
         else {
@@ -170,8 +97,9 @@ public class InteractiveMode extends lab3 {
 
                 // replace
             } else if (userArray[0].equals("s")) { // s
+                new Instructions(1);
+                LineCount++;
                 System.out.println(userArray[0]);
-
 
                 // replace
                 System.out.println();
@@ -179,11 +107,6 @@ public class InteractiveMode extends lab3 {
                 System.out.println(userArray[0]);
 
                 // run until program ends
-                System.out.println();
-            } else if (userArray[0].equals("m")) {
-                System.out.println(userArray[0]);
-
-                // replace
                 System.out.println();
             } else if (userArray[0].equals("c")) {
                 System.out.println("c");

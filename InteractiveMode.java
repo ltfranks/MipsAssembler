@@ -96,7 +96,11 @@ public class InteractiveMode extends lab3 {
                     } else if (cleanedFile.get(LineCount).get(0).equals("jr")){ // jr
                         registers.replace("pc", registers.get(cleanedFile.get(LineCount).get(1)));
                     } else if (cleanedFile.get(LineCount).get(0).equals("beq")){ // if rs = rt then, j -> label
-                        if (registers.get(cleanedFile.get(LineCount).get(1)) <= registers.get(cleanedFile.get(LineCount).get(2))){
+                        if (registers.get(cleanedFile.get(LineCount).get(1)).equals(registers.get(cleanedFile.get(LineCount).get(2)))){
+                            LineCount = LineCount - LabelLocation.get(cleanedFile.get(LineCount).get(3));  // lineCount = lineCount - LabelLocation
+                        }
+                    } else if (cleanedFile.get(LineCount).get(0).equals("bne")){ // rs != rt then, j -> label
+                        if (!registers.get(cleanedFile.get(LineCount).get(1)).equals(registers.get(cleanedFile.get(LineCount).get(2)))){
                             LineCount = LineCount - LabelLocation.get(cleanedFile.get(LineCount).get(3));  // lineCount = lineCount - LabelLocation
                         }
                     } else if (cleanedFile.get(LineCount).get(0).equals("sw")){
@@ -110,9 +114,12 @@ public class InteractiveMode extends lab3 {
                             data[cleanedFile.get(LineCount).get(2).charAt(0)] =
                                     registers.get(cleanedFile.get(LineCount).get(1));
                         }
+                    } else if (cleanedFile.get(LineCount).get(0).equals("lw")){
+                        
                     }
 
-                    // still need bne, lw, j, jal
+
+                    // still need lw, j, jal
                     System.out.println("Instructions Executed: "+(LineCount+1));
                     LineCount++;
                 }
@@ -147,7 +154,7 @@ public class InteractiveMode extends lab3 {
 
                 System.out.println("pc = " + registers.get("pc"));
                 System.out.println("$0 = " + registers.get("$0") + "          $v0 = " + registers.get("$v0")
-                        + "         $v1 = " + registers.get("$v1") + "         $v2 = " + registers.get("$v2"));
+                        + "         $v1 = " + registers.get("$v1") + "         $a0 = " + registers.get("$a0"));
                 System.out.println("$a1 = " + registers.get("$a1") + "         $a2 = " + registers.get("$a2")
                         + "         $a3 = " + registers.get("$a3") + "         $t0 = " + registers.get("$t0"));
                 System.out.println("$t1 = " + registers.get("$t1") + "         $t2 = " + registers.get("$t2")
